@@ -42,6 +42,9 @@ SYSCTL_CONF="/etc/sysctl.d/99-joeyblog.conf"
 MODULES_CONF="/etc/modules-load.d/joeyblog-qdisc.conf"
 # 安全加固配置（Dirty Frag 风险面收敛）
 SECURITY_MODPROBE_CONF="/etc/modprobe.d/99-joeyblog-security.conf"
+# 脚本远程入口和本地快捷命令
+INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/byJoey/Actions-bbr-v3/main/install.sh"
+QUICK_COMMAND_PATH="/usr/local/bin/bbrv3"
 # 可选：提升 GitHub API 限额（支持 GITHUB_TOKEN / GH_TOKEN）
 GITHUB_API_TOKEN="${GITHUB_TOKEN:-${GH_TOKEN:-}}"
 SPEEDTEST_BIN="speedtest"
@@ -75,6 +78,24 @@ check_release_api_response() {
     if ! echo "$response" | jq -e 'type=="array"' > /dev/null 2>&1; then
         echo -e "\033[31mGitHub API 返回数据格式异常，无法继续。\033[0m"
         return 1
+    fi
+}
+
+install_quick_command() {
+    if [[ "${BBRV3_SKIP_QUICK_COMMAND:-0}" == "1" ]]; then
+        return 0
+    fi
+
+    if sudo tee "$QUICK_COMMAND_PATH" > /dev/null <<EOF
+#!/usr/bin/env bash
+set -euo pipefail
+export BBRV3_SKIP_QUICK_COMMAND=1
+exec bash <(curl -fsSL "$INSTALL_SCRIPT_URL")
+EOF
+    then
+        sudo chmod 755 "$QUICK_COMMAND_PATH"
+    else
+        echo -e "\033[33m提示：快捷命令 bbrv3 安装失败，不影响当前脚本运行。\033[0m"
     fi
 }
 
@@ -1204,6 +1225,7 @@ print_separator() {
 # --- 主要执行流程 ---
 
 clear
+install_quick_command
 apply_security_mitigations
 print_separator
 echo -e "\033[1;35m(☆ω☆)✧*｡ 欢迎来到 BBR 管理脚本世界哒！ ✧*｡(☆ω☆)\033[0m"

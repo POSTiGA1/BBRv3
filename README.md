@@ -8,6 +8,12 @@
 bash <(curl -fsSL https://raw.githubusercontent.com/byJoey/Actions-bbr-v3/main/install.sh)
 ```
 
+首次运行后脚本会自动安装快捷命令，后续可直接运行：
+
+```bash
+bbrv3
+```
+
 脚本会自动识别当前系统架构，从本仓库 GitHub Releases 下载匹配的 BBRv3 内核 `.deb` 包，并提供安装、指定版本安装、状态检查、加速模式切换和卸载功能。安装内核时可选择标准 BBRv3 或 BBRv3 Max 激进吞吐内核。
 
 ## 支持环境
@@ -78,6 +84,12 @@ linux-7.1.y -> patches/bbrv3-linux-7.1.patch
 
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/byJoey/Actions-bbr-v3/main/install.sh)
+```
+
+首次运行后也可以直接输入：
+
+```bash
+bbrv3
 ```
 
 选择：
