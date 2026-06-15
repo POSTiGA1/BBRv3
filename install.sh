@@ -968,7 +968,7 @@ get_arch_filter() {
 
 get_profile_label() {
     case "${1:-standard}" in
-        max) echo "BBR v3 Max（极限内核）" ;;
+        max) echo "BBR v3 Max（激进吞吐内核）" ;;
         *) echo "BBR v3 标准版" ;;
     esac
 }
@@ -994,7 +994,7 @@ select_kernel_profile() {
 
     echo -e "\033[36m请选择要安装的内核类型：\033[0m"
     echo -e "\033[33m 1. BBR v3 标准版（推荐日常使用）\033[0m"
-    echo -e "\033[33m 2. BBR v3 Max 极限版（只为暴力测速，不管稳定性）\033[0m"
+    echo -e "\033[33m 2. BBR v3 Max 激进吞吐版（自有链路测速实验）\033[0m"
     echo -n -e "\033[36m请输入选项 (1-2，默认 1): \033[0m"
     read -r PROFILE_CHOICE
 
@@ -1004,7 +1004,7 @@ select_kernel_profile() {
             ;;
         2)
             KERNEL_PROFILE="max"
-            echo -e "\033[31m警告：BBR v3 Max 会极度弱化降速与惩罚逻辑但保留反馈闭环，只适合极限测速挑战，不建议日常生产使用。\033[0m"
+            echo -e "\033[31m警告：BBR v3 Max 会提高探测和窗口策略的进攻性，但仍保留 loss/ECN/inflight 反馈闭环；只适合自有链路吞吐测试，不建议日常生产使用。\033[0m"
             ;;
         *)
             echo -e "\033[31m输入无效，取消安装。\033[0m"

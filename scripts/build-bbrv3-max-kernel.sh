@@ -54,7 +54,7 @@ bash "$repo_root/scripts/apply-bbrv3-max-profile.sh"
 
 grep -v "MODULE_DESCRIPTION" net/ipv4/tcp_bbr.c > net/ipv4/tcp_bbr.c.tmp
 mv net/ipv4/tcp_bbr.c.tmp net/ipv4/tcp_bbr.c
-echo 'MODULE_DESCRIPTION("TCP BBR v3 Max - extreme throughput profile by Joey");' >> net/ipv4/tcp_bbr.c
+echo 'MODULE_DESCRIPTION("TCP BBR v3 Max - aggressive throughput profile by Joey");' >> net/ipv4/tcp_bbr.c
 
 IFS='.' read -r v p s <<< "$kernel_version"
 sed -i "s/^VERSION *=.*/VERSION = $v/" Makefile

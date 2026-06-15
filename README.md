@@ -8,7 +8,7 @@
 bash <(curl -fsSL https://raw.githubusercontent.com/byJoey/Actions-bbr-v3/main/install.sh)
 ```
 
-脚本会自动识别当前系统架构，从本仓库 GitHub Releases 下载匹配的 BBRv3 内核 `.deb` 包，并提供安装、指定版本安装、状态检查、加速模式切换和卸载功能。安装内核时可选择标准 BBRv3 或 BBRv3 Max 极限内核。
+脚本会自动识别当前系统架构，从本仓库 GitHub Releases 下载匹配的 BBRv3 内核 `.deb` 包，并提供安装、指定版本安装、状态检查、加速模式切换和卸载功能。安装内核时可选择标准 BBRv3 或 BBRv3 Max 激进吞吐内核。
 
 ## 支持环境
 
@@ -90,7 +90,7 @@ bash <(curl -fsSL https://raw.githubusercontent.com/byJoey/Actions-bbr-v3/main/i
 
 - 检查系统是否为 Debian/Ubuntu。
 - 检查架构是否为 `x86_64` 或 `aarch64`。
-- 让用户选择标准 BBRv3 或 BBRv3 Max 极限内核。
+- 让用户选择标准 BBRv3 或 BBRv3 Max 激进吞吐内核。
 - 从 GitHub Releases 获取当前架构和内核类型匹配的最新版本。
 - 下载非 debug 的内核 `.deb` 包。
 - 安装新内核并更新引导配置。
@@ -122,7 +122,7 @@ x86_64-7.0.11-max
 arm64-7.0.11-max
 ```
 
-其中不带 `-max` 的 tag 是标准 BBRv3 内核，带 `-max` 的 tag 是 BBRv3 Max 极限内核。Max 版会极度弱化 BBRv3 的降速、ECN、loss/inflight 收敛力度，但保留反馈闭环，只适合自有链路极限测速挑战，不建议日常生产使用。
+其中不带 `-max` 的 tag 是标准 BBRv3 内核，带 `-max` 的 tag 是 BBRv3 Max 激进吞吐内核。Max 版会提高 Startup、ProbeBW 和 cwnd 策略的进攻性，但保留 BBRv3 的 loss、ECN、inflight 和 ProbeBW 反馈闭环，只适合自有链路吞吐测试，不建议日常生产使用。
 
 ## 检查 BBRv3 状态
 
